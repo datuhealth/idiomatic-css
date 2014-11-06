@@ -35,6 +35,7 @@ contribute.
   when many people are contributing to it.
 * Strictly enforce the agreed-upon style.
 * If in doubt when deciding upon a style use existing, common patterns.
+* Don't worry about optimization. Grunt, CSSMin, and CSSLint will do that for you. Keep it readable.
 
 
 <a name="whitespace"></a>
@@ -45,17 +46,24 @@ be consistent in your use of whitespace. Use whitespace to improve
 readability.
 
 * _Never_ mix spaces and tabs for indentation.
-* Choose between soft indents (spaces) or real tabs. Stick to your choice
-  without fail. (Preference: spaces)
-* If using spaces, choose the number of characters used per indentation level.
-  (Preference: 4 spaces)
+* Always use soft indents (spaces).
+* Always use 4 space tabs.
+* Use [EditorConfig](http://editorconfig.org/) to manage your extra whitespace.
+* Place a blank line between rules.
+
+```css
+.rule-1,
+.rule-2 {
+    color: red;
+}
+
+.class-1 {
+    background-color: green;
+}
+```
 
 Tip: configure your editor to "show invisibles" or to automatically remove
 end-of-line whitespace.
-
-Tip: use an [EditorConfig](http://editorconfig.org/) file (or equivalent) to
-help maintain the basic whitespace conventions that have been agreed for your
-code-base.
 
 
 <a name="comments"></a>
@@ -120,9 +128,8 @@ in useful diffs and blames.
 * Use one level of indentation for each declaration.
 * Include a single space after the colon of a declaration.
 * Use lowercase and shorthand hex values, e.g., `#aaa`.
-* Use single or double quotes consistently. Preference is for double quotes,
-  e.g., `content: ""`.
-* Quote attribute values in selectors, e.g., `input[type="checkbox"]`.
+* Use single quotes for string literals.
+* Quote attribute values in selectors, e.g., `input[type='checkbox']`.
 * _Where allowed_, avoid specifying units for zero-values, e.g., `margin: 0`.
 * Include a space after each comma in comma-separated property or function
   values.
@@ -131,19 +138,23 @@ in useful diffs and blames.
 * Place the closing brace of a ruleset in the same column as the first
   character of the ruleset.
 * Separate each ruleset by a blank line.
+* Place a space between parentheses and their values.
+* Never use `id` selectors.
+* Try to avoid floating point numbers. If you're using decimals, you're probably being too specific.
+* For repeating decimals ( e.g. 1/3 ), use 10 decimal places.
 
 ```css
 .selector-1,
 .selector-2,
-.selector-3[type="text"] {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+.selector-3[type='text'] {
     display: block;
     font-family: helvetica, arial, sans-serif;
     color: #333;
-    background: #fff;
-    background: linear-gradient(#fff, rgba(0, 0, 0, 0.8));
+    background-color: #fff;
+    background-image: linear-gradient( #fff, rgba( 0, 0, 0, 0.8 ));
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .selector-a,
@@ -177,18 +188,20 @@ box-model) together.
     width: 100px;
     height: 100px;
     padding: 10px;
-    border: 10px solid #333;
     margin: 10px;
-
-    /* Other */
-    background: #000;
+    
+    /* Typography */
     color: #fff;
     font-family: sans-serif;
     font-size: 16px;
     text-align: right;
-}
-```
 
+    /* Other */
+    background: #000;
+    border: 10px solid #333;
+}
+
+```
 Larger teams may prefer the simplicity and ease-of-maintenance that comes with
 alphabetical ordering.
 
@@ -212,8 +225,8 @@ be used; one example is shown below.
 ```css
 .selector {
     background-image:
-        linear-gradient(#fff, #ccc),
-        linear-gradient(#f3c, #4ec);
+        linear-gradient( #fff, #ccc ),
+        linear-gradient( #f3c, #4ec );
     box-shadow:
         1px 1px 1px #000,
         2px 2px 1px 1px #ccc inset;
@@ -222,32 +235,35 @@ be used; one example is shown below.
 
 ### Preprocessors: additional format considerations
 
-Different CSS preprocessors have different features, functionality, and syntax.
-Your conventions should be extended to accommodate the particularities of any
-preprocessor in use. The following guidelines are in reference to Sass.
+We use Less here on this team.
 
-* Limit nesting to 1 level deep. Reassess any nesting more than 2 levels deep.
-  This prevents overly-specific CSS selectors.
+* Limit nesting to 3 levels deep. If you've gone further than that, stop, and re-evaluate what you've done.
 * Avoid large numbers of nested rules. Break them up when readability starts to
   be affected. Preference to avoid nesting that spreads over more than 20
   lines.
 * Always place `@extend` statements on the first lines of a declaration
   block.
-* Where possible, group `@include` statements at the top of a declaration
+* Always place `@include` statements at the top of a declaration
   block, after any `@extend` statements.
 * Consider prefixing custom functions with `x-` or another namespace. This
   helps to avoid any potential to confuse your function with a native CSS
   function, or to clash with functions from libraries.
 
-```scss
+```less
 .selector-1 {
-    @extend .other-rule;
-    @include clearfix();
-    @include box-sizing(border-box);
-    width: x-grid-unit(1);
+    .extended-rule;
+    .clearfix();
+    .box-sizing( border-box );
+    width: x-grid-unit( 1 );
     // other declarations
 }
 ```
+
+### Exceptions
+
+There is one exception we've identified thus far.
+
+* Pseudo-elements are allowed to go to a fourth level of indentation.
 
 
 <a name="example"></a>
@@ -336,27 +352,6 @@ An example of various conventions.
     border-width: 4px;
 }
 ```
-
-
-## Translations
-
-* [Bahasa Indonesia](https://github.com/necolas/idiomatic-css/tree/master/translations/id-ID)
-* [Česky](https://github.com/necolas/idiomatic-css/tree/master/translations/cs-CZ)
-* [Dansk](https://github.com/necolas/idiomatic-css/tree/master/translations/da-DK)
-* [Deutsch](https://github.com/necolas/idiomatic-css/tree/master/translations/de-DE)
-* [Español](https://github.com/necolas/idiomatic-css/tree/master/translations/es-ES)
-* [Français](https://github.com/necolas/idiomatic-css/tree/master/translations/fr-FR)
-* [Italiano](https://github.com/necolas/idiomatic-css/tree/master/translations/it-IT)
-* [日本語](https://github.com/necolas/idiomatic-css/tree/master/translations/ja-JP)
-* [한국어](https://github.com/necolas/idiomatic-css/tree/master/translations/ko-KR)
-* [Nederlands](https://github.com/necolas/idiomatic-css/tree/master/translations/nl-NL)
-* [Polski](https://github.com/necolas/idiomatic-css/tree/master/translations/pl-PL)
-* [Português (Brasil)](https://github.com/necolas/idiomatic-css/tree/master/translations/pt-BR)
-* [Русский](https://github.com/necolas/idiomatic-css/tree/master/translations/ru-RU)
-* [Srpski](https://github.com/necolas/idiomatic-css/tree/master/translations/sr-SR)
-* [Türkçe](https://github.com/necolas/idiomatic-css/tree/master/translations/tr-TR)
-* [正體中文](https://github.com/necolas/idiomatic-css/tree/master/translations/zh-TW)
-* [简体中文](https://github.com/necolas/idiomatic-css/tree/master/translations/zh-CN)
 
 
 <a name="acknowledgements"></a>
