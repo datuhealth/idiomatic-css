@@ -1,3 +1,7 @@
+# UNMAINTAINED
+
+This project is no longer being maintained. It's suggested that an alternative be used instead.
+
 # Principles of writing consistent, idiomatic CSS
 
 The following document outlines a reasonable style guide for CSS development.
